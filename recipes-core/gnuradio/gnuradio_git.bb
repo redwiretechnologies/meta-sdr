@@ -8,21 +8,20 @@ DEPENDS = "volk gsl fftw python3 python3-six-native alsa-lib boost \
            python3-mako-native git-native gmp libsndfile1 \
            python3-packaging-native"
 
-#Available PACKAGECONFIG options are qtgui5 grc uhd logging orc ctrlport zeromq staticlibs iio
-PACKAGECONFIG ??= "qtgui5 grc zeromq iio"
+#Available PACKAGECONFIG options are qtgui5 grc uhd logging orc ctrlport zeromq staticlibs
+PACKAGECONFIG ??= "qtgui5 grc zeromq"
 
 PACKAGECONFIG[qtgui5] = "-DENABLE_GR_QTGUI=ON \
                  ,-DENABLE_GR_QTGUI=OFF,qtbase qwt-qt5 python3-pyqt5 "
 PACKAGECONFIG[grc] = "-DENABLE_GRC=ON,-DENABLE_GRC=OFF, , "
 PACKAGECONFIG[uhd] = "-DENABLE_GR_UHD=ON,-DENABLE_GR_UHD=OFF,uhd,"
-PACKAGECONFIG[iio] = "-DENABLE_GR_IIO=ON,-DENABLE_GR_IIO=OFF,libiio libad9361-iio "
 PACKAGECONFIG[logging] = "-DENABLE_GR_LOG=ON,-DENABLE_GR_LOG=OFF,log4cpp, "
 PACKAGECONFIG[orc] = "-DENABLE_ORC=ON,-DENABLE_ORC=OFF,orc, "
 PACKAGECONFIG[ctrlport] = "-DENABLE_GR_CTRLPORT=ON,-DENABLE_GR_CTRLPORT=OFF,thrift thrift-native, "
 PACKAGECONFIG[zeromq] = "-DENABLE_GR_ZEROMQ=ON,-DENABLE_GR_ZEROMQ=OFF,cppzmq python3-pyzmq, "
 PACKAGECONFIG[staticlibs] = "-DENABLE_STATIC_LIBS=ON,-DENABLE_STATIC_LIBS=OFF "
 
-inherit distutils3-base  cmake pkgconfig python3native mime mime-xdg ptest
+inherit setuptools3-base cmake pkgconfig python3native mime mime-xdg ptest
 inherit ${@bb.utils.contains('PACKAGECONFIG', 'qtgui5',' cmake_qt5', '', d)}
 
 export BUILD_SYS
@@ -42,8 +41,6 @@ RDEPENDS:${PN}-qtgui = "python3-pyqt5 python3-sip3"
 
 RDEPENDS:${PN}-zeromq = "python3-pyzmq"
 
-RDEPENDS:${PN}-iio = "libiio libad9361-iio"
-
 C_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
 #do_configure:prepend() {
@@ -61,7 +58,7 @@ ALLOW_EMPTY:${PN} = "1"
 
 GR_PACKAGES = "gnuradio-analog gnuradio-audio gnuradio-blocks \
             gnuradio-channels gnuradio-ctrlport gnuradio-digital gnuradio-fec gnuradio-fft \
-            gnuradio-filter gnuradio-gr gnuradio-gru gnuradio-iio \
+            gnuradio-filter gnuradio-gr gnuradio-gru \
             gnuradio-gr-utils \
             gnuradio-modtool gnuradio-noaa gnuradio-pager gnuradio-pmt \
             gnuradio-runtime \
@@ -105,8 +102,6 @@ FILES:${PN}-grc = "${bindir}/gnuradio-companion ${datadir}/gnuradio/grc \
                    ${datadir}/icons ${datadir}/mime ${datadir}/metainfo"
 FILES:${PN}-gru = "${PYTHON_SITEPACKAGES_DIR}/gnuradio/gru \
                    ${datadir}/gnuradio/gru"
-FILES:${PN}-iio = "${PYTHON_SITEPACKAGES_DIR}/gnuradio/iio \
-                   ${datadir}/gnuradio/iio"
 FILES:${PN}-gr-utils = "${bindir}/gr_plot* ${bindir}/grcc \
                         ${bindir}/gr_read_file_metadata \
                         ${PYTHON_SITEPACKAGES_DIR}/gnuradio/plot_data* \
@@ -218,21 +213,19 @@ python populate_packages:prepend() {
         d.appendVar('RDEPENDS:'+pn+'-dev', ' '+' '.join(pkgs))
 }
 
-PV = "3.10.4.0"
-#PV = "3.10.0.0"
+#PV = "3.10.4.0+git${SRCPV}"
+PV = "v3.10.7.0"
 
 FILESPATHPKG:prepend = "gnuradio-git:"
 
-SRCREV ="279e8ede08fd2ac8648586b65f5fa9335a3a0585"
+SRCREV ="d79e0be3f2a3fe6ec1d3a79bb8912f48422efcb8"
 
 # Make it easy to test against branches
 GIT_BRANCH = "maint-3.10"
 GITHUB_USER = "gnuradio"
 
 SRC_URI = "git://github.com/${GITHUB_USER}/gnuradio.git;branch=${GIT_BRANCH};protocol=https \
-           file://0001-Remove-paths-from-pc-files-that-contain-build-system.patch \
            file://0001-Don-t-use-the-value-of-PYTHON_EXECTUABLE-probed-at-b.patch \
-           file://0001-Compiler-flags-include-build-system-paths.patch \
            file://run-ptest \
           "
 
@@ -252,10 +245,6 @@ EXTRA_OECMAKE = "\
                  ${@bb.utils.contains('TUNE_FEATURES', 'neon', \
                      '-Dhave_mfpu_neon=1', '-Dhave_mfpu_neon=0', d)} \
 "
-do_install:append() {
-    find ${D} -name "*.pyc" -exec rm {} \;
-    find ${D} -name "*.pyo" -exec rm {} \;
-}
 
 do_install_ptest() {
     mkdir -p ${D}${PTEST_PATH}
@@ -263,8 +252,6 @@ do_install_ptest() {
     find . -name "qa*sh" -exec cp --parents {} ${D}${PTEST_PATH} \;
     find . -name test_modtool_test.sh -exec cp --parents {} ${D}${PTEST_PATH} \;
     find . -name "CTestTestfile.cmake" -exec cp --parents {} ${D}${PTEST_PATH} \;
-    find ${D}${PTEST_PATH} -name "CTestTestfile.cmake" -exec sed -i "s|${B}||g" {} \;
-    find ${D}${PTEST_PATH} -name "CTestTestfile.cmake" -exec sed -i "s|${S}||g" {} \;
 
     cd ${S}
     find . -name "qa*py" -exec cp --parents {} ${D}${PTEST_PATH} \;

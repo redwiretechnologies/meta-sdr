@@ -1,10 +1,10 @@
 SUMMARY = "This out of tree module contains a number of blocks to help perform mapping between bits and symbols"
-HOMEPAGE = "https://github.com/gr-ieee80211/gr-ieee802-11"
+HOMEPAGE = "https://github.com/gr-vt/gr-mapper"
 LICENSE = "GPLv3"
-LIC_FILES_CHKSUM = "file://CMakeLists.txt;md5=3110fe5b9e99cdb2dcaa3d39493f9d93"
+LIC_FILES_CHKSUM = "file://CMakeLists.txt;md5=eab9ee8e6de066f0b8e6fdc7460ba348"
 
 
-DEPENDS = "gnuradio gr-foo log4cpp cppunit swig-native python3-pybind11-native python3-native python3-numpy-native"
+DEPENDS = "gnuradio log4cpp cppunit swig-native python3-pybind11-native  python3-native python3-numpy-native"
 RDEPENDS:${PN} = "gnuradio python3-click"
 
 inherit setuptools3 cmake
@@ -13,13 +13,16 @@ export BUILD_SYS
 export HOST_SYS="${MULTIMACH_TARGET_SYS}"
 
 
-PV = "0.0.4+git${SRCPV}"
+PV = "1.0.0+git${SRCPV}"
 
-SRC_URI = "git://github.com/bastibl/gr-ieee802-11;branch=maint-3.10;protocol=https \
+SRC_URI = "git://github.com/bkerler/gr-pager.git;branch=maint-3.10;protocol=https \
           "
+SRCREV = "7df10f41709af2841058a7f42b3d641ee508d10e"
+
 S = "${WORKDIR}/git"
 
-SRCREV = "56d8c5c19f64fb468397176ef52ea8c0a235e019"
+
+
 
 EXTRA_OECMAKE = " \
     -DGR_PYTHON_DIR=${PYTHON_SITEPACKAGES_DIR} \

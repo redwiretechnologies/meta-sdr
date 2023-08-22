@@ -11,13 +11,15 @@
 # the option is a question of removing the # character and making any change to the
 # variable as required.
 
-DISTRO_FEATURES:append = " opengl x11 ptest"
+DISTRO_FEATURES:append = "  "
 
 PACKAGECONFIG:pn-gnuradio = "grc zeromq logging"
-PACKAGECONFIG:pn-gr-osmosdr = "rtl-sdr hackrf rfspace"
+PACKAGECONFIG:pn-gr-osmosdr = "rtl-sdr"
+PACKAGECONFIG_FONTS:pn-qtbase = "fontconfig"
+IMAGE_ROOTFS_SIZE:pn-gnuradio-demo-image = "131072"
 
-ERROR_QA:remove = "version-going-backwards"
-WARN_QA:append = " version-going-backwards"
+#PREFERRED_PROVIDER_virtual/libgl = "mesa-gl"
+#PREFERRED_PROVIDER_virtual/mesa = "mesa-gl"
 
 #
 # Parallelism Options
@@ -50,7 +52,7 @@ WARN_QA:append = " version-going-backwards"
 #MACHINE ?= "qemux86-64"
 #
 # This sets the default machine to be qemux86 if no other machine is selected:
-MACHINE ??= "qemux86-64"
+MACHINE ??= "j721e-evm"
 
 #
 # Where to place downloads
@@ -141,8 +143,6 @@ PACKAGE_CLASSES ?= "package_ipk"
 # We default to enabling the debugging tweaks.
 EXTRA_IMAGE_FEATURES = "debug-tweaks "
 
-IMAGE_FSTYPES = "tar.gz"
-
 #
 # Additional image features
 #
@@ -150,8 +150,11 @@ IMAGE_FSTYPES = "tar.gz"
 # enable extra features. Some available options which can be included in this variable 
 # are:
 #   - 'buildstats' collect build statistics
+#   - 'image-mklibs' to reduce shared library files size for an image
 #   - 'image-prelink' in order to prelink the filesystem image
 #   - 'image-swab' to perform host system intrusion detection
+# NOTE: if listing mklibs & prelink both, then make sure mklibs is before prelink
+# NOTE: mklibs also needs to be explicitly enabled for a given image, see local.conf.extended
 USER_CLASSES ?= "buildhistory buildstats image-buildinfo rm_work"
 
 RM_WORK_EXCLUDE = "base-dev-image uhd-dev-image gnuradio-dev-image \

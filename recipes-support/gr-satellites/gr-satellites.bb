@@ -5,7 +5,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=84dcc94da3adb52b53ae4fa38fe49e5d"
 
 
 DEPENDS = "gnuradio python3 cppunit python3-pybind11-native python3-native python3-numpy-native spdlog python3-construct python3-requests orc orc-native feh"
-RDEPENDS_${PN} = "gnuradio python3-click python3-construct python3-requests orc feh"
+RDEPENDS:${PN} = "gnuradio python3-click python3-construct python3-requests orc feh"
 
 inherit setuptools3 cmake
 
@@ -28,9 +28,9 @@ EXTRA_OECMAKE = " \
     -DENABLE_DOXYGEN=OFF \
     "
 
-INSANE_SKIP_${PN} = "dev-so"
+INSANE_SKIP:${PN} = "dev-so"
 FILES_SOLIBSDEV = ""
-FILES_${PN} += " \
+FILES:${PN} += " \
     ${datadir}/gnuradio/grc/blocks/*.yml \
     ${libdir}/*.so \
 "

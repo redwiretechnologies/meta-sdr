@@ -5,7 +5,7 @@ LIC_FILES_CHKSUM = "file://CMakeLists.txt;md5=3273935b74fae1d26432b0aa26ef796d"
 
 
 DEPENDS = "gnuradio log4cpp cppunit swig-native python3-pybind11-native  python3-native python3-numpy-native"
-RDEPENDS_${PN} = "gnuradio python3-click"
+RDEPENDS:${PN} = "gnuradio python3-click"
 
 inherit setuptools3 cmake
 
@@ -27,9 +27,9 @@ EXTRA_OECMAKE = " \
     -DENABLE_DOXYGEN=OFF \
     "
 
-INSANE_SKIP_${PN} = "dev-so"
+INSANE_SKIP:${PN} = "dev-so"
 FILES_SOLIBSDEV = ""
-FILES_${PN} += " \
+FILES:${PN} += " \
     ${datadir}/gnuradio/grc/blocks/*.yml \
     ${libdir}/*.so \
 "

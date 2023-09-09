@@ -1,5 +1,5 @@
-SUMMARY = "This out of tree module contains a number of blocks to help perform mapping between bits and symbols"
-HOMEPAGE = "https://github.com/ghostop14/gr-mesa"
+SUMMARY = "gr-satellites is a GNU Radio out-of-tree module encompassing a collection of telemetry decoders that supports many different Amateur satellites."
+HOMEPAGE = "https://github.com/daniestevez/gr-satellites"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=84dcc94da3adb52b53ae4fa38fe49e5d"
 

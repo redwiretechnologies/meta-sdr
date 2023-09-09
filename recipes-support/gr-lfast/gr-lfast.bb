@@ -1,7 +1,7 @@
-SUMMARY = "This out of tree module contains a number of blocks to help perform mapping between bits and symbols"
+SUMMARY = "The goal of the gr-lfast project is to increase flowgraph performance while running on a general purpose CPU. So far the project uses several techniques to achieve the performance boosts:"
 HOMEPAGE = "https://github.com/ghostop14/gr-lfast"
 LICENSE = "GPLv3"
-LIC_FILES_CHKSUM = "file://CMakeLists.txt;md5=199395d4cfeccfa8d19daae1337625bb"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=84dcc94da3adb52b53ae4fa38fe49e5d"
 
 
 DEPENDS = "gnuradio volk log4cpp cppunit swig-native python3-pybind11-native python3-native python3-numpy-native spdlog"

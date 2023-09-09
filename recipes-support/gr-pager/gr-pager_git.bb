@@ -1,7 +1,7 @@
-SUMMARY = "This out of tree module contains a number of blocks to help perform mapping between bits and symbols"
-HOMEPAGE = "https://github.com/gr-vt/gr-mapper"
+SUMMARY = "This is an out-of-tree (OOT) module for GNU Radio which can demodulate and decode Motorola FLEX radiopager signals. "
+HOMEPAGE = "https://github.com/troycurtisjr/gr-pager"
 LICENSE = "GPLv3"
-LIC_FILES_CHKSUM = "file://CMakeLists.txt;md5=eab9ee8e6de066f0b8e6fdc7460ba348"
+LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
 
 DEPENDS = "gnuradio log4cpp cppunit swig-native python3-pybind11-native  python3-native python3-numpy-native"

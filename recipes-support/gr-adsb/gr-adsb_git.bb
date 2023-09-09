@@ -1,7 +1,7 @@
-SUMMARY = "This out of tree module contains a number of blocks to help perform mapping between bits and symbols"
-HOMEPAGE = "https://github.com/gr-ieee80211/gr-ieee802-11"
+SUMMARY = "A GNU Radio out-of-tree (OOT) module to demodulate and decode Automatic Dependent Surveillance Broadcast (ADS-B) messages"
+HOMEPAGE = "https://github.com/mhostetter/gr-adsb"
 LICENSE = "GPLv3"
-LIC_FILES_CHKSUM = "file://CMakeLists.txt;md5=fb32adcc8ebd419b8f291f8eeb5e8377"
+LIC_FILES_CHKSUM = "file://COPYING;md5=84dcc94da3adb52b53ae4fa38fe49e5d"
 
 
 DEPENDS = "gnuradio gr-foo log4cpp cppunit swig-native python3-pybind11-native python3-native python3-numpy-native"
